@@ -28,7 +28,8 @@ const CarListing = () => {
             </Col>
 
             {carData.map((item) => (
-              <CarItem item={item} key={item.id, item.statuse} />
+              <CarItem item={item} 
+              key={item.id, item.statuse} />
             ))}
           </Row>
         </Container>
