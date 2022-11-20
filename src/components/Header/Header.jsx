@@ -28,6 +28,28 @@ const navLinks = [
 const Header = () => {
   const menuRef = useRef(null);
 
+  let k = localStorage.getItem("islogged");
+  
+  let dg = false ;
+  if (k=='true')
+  {
+	  
+	dg = true;  
+	//alert(dg);
+  }
+  
+  const logout = (event) => {
+	  
+	  localStorage.setItem("islogged",false);
+	  dg = false;
+	    window.location.reload(false);
+    event.preventDefault();
+	
+	
+	
+	
+  };
+  
   const toggleMenu = () => menuRef.current.classList.toggle("menu__active");
 
   return (
@@ -42,13 +64,43 @@ const Header = () => {
 
             <Col lg="6" md="6" sm="6">
               <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
-                <Link to="#" className=" d-flex align-items-center gap-1">
+                
+
+                
+				  
+				 {	(dg) ?
+				(<Link to="/home" className=" d-flex align-items-center gap-1">
+                  <i class="ri-user-circle-line"></i> MyAccount
+                </Link>
+				)
+				
+			:
+			
+				(<Link to="/login" className=" d-flex align-items-center gap-1">
                   <i class="ri-login-circle-line"></i> Login
                 </Link>
-
-                <Link to="#" className=" d-flex align-items-center gap-1">
+				 )
+				 
+				 }
+				 
+				 
+				 	 {	(dg) ?
+				(<Link to="/home" onClick={logout} className=" d-flex align-items-center gap-1">
+                  <i class="ri-user-circle-line" ></i> Logout
+                </Link>
+				)
+				
+			:
+			
+				(<Link to="/register" className=" d-flex align-items-center gap-1">
                   <i class="ri-user-line"></i> Register
                 </Link>
+				 )
+				 
+				 }
+				 
+				 
+			
               </div>
             </Col>
           </Row>
