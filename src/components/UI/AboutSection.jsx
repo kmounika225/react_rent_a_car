@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import "../../styles/about-section.css";
-import aboutImg from "../../assets/all-images/cars-img/bmw-offer.png";
+//import aboutImg from "https://www.chevrolet.com/content/dam/chevrolet/na/us/english/vdc-collections/2022/cars/malibu/01-images/2022-malibu-1sp-gsk-colorizer.jpg?imwidth=960";
 
 const AboutSection = ({ aboutClass }) => {
   return (
@@ -29,7 +29,7 @@ const AboutSection = ({ aboutClass }) => {
 
           <Col lg="6" md="6">
             <div className="about__img">
-              <img src={aboutImg} alt="" className="w-100" />
+              <img src= "https://raw.githubusercontent.com/scarlethawk85/rentcarimg/main/rollsryce.png" alt="" className="w-100" />
             </div>
           </Col>
         </Row>

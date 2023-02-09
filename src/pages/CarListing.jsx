@@ -1,16 +1,36 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/CommonSection";
 import CarItem from "../components/UI/CarItem";
-import carData from "../assets/data/carData";
-//import Select from "react-select";
-//import from react;
+
 
 const CarListing = () => {
 	
 	
 const [filterval , setfiltervalue] = useState('dd');
+    const [typefilterval , settypefiltervalue] = useState('dd');
+const [cars , setCars] = useState([]);
+
+
+  const fetchData =()=>{
+fetch("https://63895b77c5356b25a2feb5ca.mockapi.io/cars")
+.then((response) =>{
+return response.json(); 
+}).then((data)=>{
+let cars_Data = data;
+console.log(cars_Data); 
+setCars(cars_Data);
+})
+}
+
+useEffect(() => {
+		
+		
+       fetchData();
+    },[])
+
+
 	
   return (
     <Helmet title="Cars">
@@ -39,16 +59,64 @@ const [filterval , setfiltervalue] = useState('dd');
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
                 </select>
+                  
+                  
+                   <span className=" d-flex align-items-center gap-2">
+                  <i class="ri-sort"></i> Type
+                </span>
+
+                <select 
+				onChange ={(e) => {
+					const selce = e.target.value;
+					
+					
+						
+							settypefiltervalue(selce);
+				}
+					
+				}>
+                  <option value="All">All</option>
+                  <option value="LUX">LUX</option>
+                  <option value="sedan">Sedan</option>
+                    <option value="suv">SUV</option>
+                </select>
               </div>
             </Col>
 		{
 			
-			(filterval=='select' || filterval== 'dd') ? (carData.map((item) => (
+			(filterval=='select' || filterval== 'dd' ) ? (
+                
+                
+                 (typefilterval == "All" || typefilterval == 'dd') ?
+              
+                  (cars.map((item) => (  
+                
               <CarItem item={item} key={item.id} />
             ))
-			) : (carData.filter((item) =>item.statuse==filterval ).map((item) => (
+                    
+                
+              ) : (cars.filter((item) =>item.cat==typefilterval).map((item) => (
               <CarItem item={item} key={item.id} />
             ))
+			)
+                
+                
+			) : (
+                
+                (typefilterval == "All" || typefilterval == 'dd') ?( 
+                cars.filter((item) =>item.statuse==filterval ).map((item) => (
+              <CarItem item={item} key={item.id} />
+            )) ) :
+                (
+                  cars.filter((item) =>(item.statuse==filterval && item.cat == typefilterval) ).map((item) => (
+              <CarItem item={item} key={item.id} />
+            )) 
+                
+                
+                )
+                
+                
+                
 			)
 			
 			 

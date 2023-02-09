@@ -6,7 +6,6 @@ import AboutSection from "../components/UI/AboutSection";
 import { Container, Row, Col } from "reactstrap";
 
 
-import driveImg from "../assets/all-images/drive.jpg";
 import "../styles/about.css";
 
 const About = () => {

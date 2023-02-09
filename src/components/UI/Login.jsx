@@ -8,7 +8,7 @@ import "../../styles/booking-form.css";
 import "../../styles/payment-method.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import userData from "../../assets/data/userData";
+
 
 const Login = () => {
 	
@@ -16,46 +16,91 @@ const Login = () => {
 	  const [usernameval , setusernameval] = useState('');
 	   const [pwd, setPwd] = useState('');
 	   const [success, setSuccess] = useState(false);
+	   const [users_arr, setUsers_arr] = useState([]);
+	   const [userdet_arr, setUsersdet_arr] = useState([]);
   const loginNameRef = useRef();
   const loginPasswordRef = useRef();
   
   
-   useEffect(() => {
-        loginNameRef.current.focus();
-    }, [])
+  
+  const fetchData =()=>{
+fetch("https://63895b77c5356b25a2feb5ca.mockapi.io/users")
+.then((response) =>{
+return response.json(); 
+}).then((data)=>{
+let usrs = data;
+console.log(usrs); 
+setUsers_arr(usrs);
+fetchUserDetData();
+})
+}
+
+ const fetchUserDetData =()=>{
+fetch("https://63895b77c5356b25a2feb5ca.mockapi.io/registeredusers")
+.then((response) =>{
+return response.json(); 
+}).then((data)=>{
+let usrsdata = data;
+console.log(usrsdata); 
+setUsersdet_arr(usrsdata);
+
+})
+}
+  
+
 
     useEffect(() => {
+		
+		
         setErrorMessage('');
     }, [usernameval, pwd])
 
+
+   useEffect(() => {
+		
+		
+        fetchData();
+    }, [])
+
+
+
  const navigate = useNavigate();	
   const submitHandler = (e) => {
-	 const k = localStorage.getItem(usernameval)
-	 
-	 if (k == pwd)
-	 {
-		 alert("Sucessfully Logged in");
+	  
+	  const usrname = users_arr.filter(user => user.username === usernameval );
+	 // const passwo = users_arr.filter(user => user.password === pwd );
+	  const passwo = usrname[0].password === pwd;
+	  
+	  console.log("usegf");
+	  console.log(usrname);
+	  console.log("passs");
+	  console.log(passwo);
+	  
+	  
+	  if(usrname.length&&passwo)
+	  {
+		  const userar = userdet_arr.filter(user => user.username === usernameval );
+		
+		  
+		  const fname = userar[0].fname;
+		  const lname = userar[0].lname;
+		  const phone = userar[0].phone;
+		  const email = usernameval;
+		  
+		   alert("Sucessfully Logged in");
+		   localStorage.setItem('fname',fname)
+		   localStorage.setItem('lname',lname)
+		   localStorage.setItem('phone',phone)
+		     localStorage.setItem('email',email)
 		 localStorage.setItem('islogged',true)
 		 navigate("/cars")
-	 }
-	 else{
+	  }
+	  else{
 		 alert('Incorrect Username or password');
 	 }
- 
-  /*for (let i = 0 ; i< userData.length ; i++ ) {
 	  
-    if ((userData[i].username == usernameval) && (userData[i].passwords == pwd))
-	{
-		 alert("Login sucess");
-		 navigate("/home")
-		 break;
-	}
-
-  }*/
-  
-  
-  
- // alert('Incorrect Username or password');
+	  
+	  
    e.preventDefault();
   };
 
@@ -84,12 +129,13 @@ const Login = () => {
                   />
               </FormGroup>
 			  <FormGroup>
-			   <div className="payment text-center mt-6">
+			   <div className="payment text-center mt-4">
                 <button  type="submit">
                   Login
                 </button>
 				 </div>
 				   </FormGroup>
+          
               </Form>
 			  
             

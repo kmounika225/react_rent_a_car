@@ -4,8 +4,12 @@ import "../../styles/payment-method.css";
 import { Form, FormGroup } from "reactstrap";
 import validator from 'validator';
 import { useNavigate } from "react-router-dom";
+
+import axios from 'axios'
+
+
 const Register = () => {
-	
+	const [users_arr, setusers_arr] = useState([]);
 	const [firstname , setfirstname] = useState('');
 	const [lastname , setlastname] = useState('');
 	const [email , setemail] = useState('');
@@ -93,7 +97,128 @@ const us_cities = ["City of Residence","Abbeville", "Abbotsford", "Aberdeen", "A
   
   		const routereg = event => {
 			
-			let dk = localStorage.getItem(email);
+			console.log("fname");
+			console.log(firstname);
+			console.log("lname");
+			console.log(lastname);
+			console.log("email");
+			console.log(email);
+			console.log("phohe");
+			console.log(phone);
+			console.log("rescity");
+			console.log(res_city);
+			console.log("ressate");
+			console.log(res_state);
+			console.log("pass");
+			console.log(pass);
+			console.log("adde");
+			console.log(add);
+			console.log("dob");
+			console.log(dob);
+			
+			
+	  ///fetchData();
+	  
+	  fetch("https://63895b77c5356b25a2feb5ca.mockapi.io/registeredusers")
+.then((response) =>{
+return response.json(); 
+}).then((data)=>{
+let usrs = data;
+//console.log(usrs.filter(user => user['username'] === email )); 
+setusers_arr(data);
+
+var hasMatch =false;
+
+for (var index = 0; index < usrs.length; ++index) {
+
+ var animal = usrs[index];
+//alert(email)
+ if(animal.username == email){
+   hasMatch = true;
+   break;
+ }
+}
+
+if (!hasMatch)
+{
+	
+		  
+	  
+	  /*console.log("uers aee")
+	  console.log(users_arr)
+	  const usrname = users_arr.filter(user => user['username'] === email );
+	  const checj = 0;
+	  console.log("usebaa")
+	  console.log(usrname)*/
+	 
+		  
+		  
+	  /*fetch('https://637eac93cfdbfd9a63b550dd.mockapi.io/registeredusers', {
+   method: 'post',
+   headers: {'Content-Type':'application/json'},
+   body: JSON.stringify({
+	   
+'fname': firstname,'lname': lastname,'username' : email , 'password':pass, 'phone' :phone,'state' :res_state , 'city' : res_city,'dob' : dob, 'address': add
+})
+  });*/	  
+		  
+		  
+		  
+		  
+		  
+				axios
+.post('https://63895b77c5356b25a2feb5ca.mockapi.io/registeredusers',{'fname': firstname,'lname': lastname,'username' : email , 'password':pass, 'phone' :phone,'state' :res_state , 'city' : res_city,'dob' : dob, 'address': add})
+.then(response => {
+	console.log(response);
+	
+	const resd = response.status;
+	
+	if (resd == 201)
+	{
+		
+					  		axios
+.post('https://63895b77c5356b25a2feb5ca.mockapi.io/users',{'username' : email , 'password':pass})
+.then(response => {
+	console.log(response);
+	
+	const resd = response.status;
+	
+	if (resd == 201)
+	{
+		
+alert("User registration Sucessful");
+        localStorage.setItem('email',email)
+		navigate("/login");
+
+		
+	}
+	else{
+		
+		alert("Network error or API error");
+	}
+	
+	 
+})
+
+.catch(error => {
+console.log(error);
+})
+
+		
+		
+		
+	}
+	
+	 
+})
+
+.catch(error => {
+console.log(error);
+})
+
+			
+			
+			/*let dk = localStorage.getItem(email);
 			
 			if(dk)
 			{
@@ -101,12 +226,41 @@ const us_cities = ["City of Residence","Abbeville", "Abbotsford", "Aberdeen", "A
 			}
 			else
 			{localStorage.setItem(email,pass);
-		 localStorage.setItem("islogged",true);
+		 localStorage.setItem("islogged",true);*/
 		     
-		 navigate("/home");}
+		
+		  
+		  
+		  
+		  
+		  
+		   
+		  
+	  }
+	  else{
+		 alert('User ID already exists. Register with new email address');
+	 }
+		
+			
+
+
+
+
+
+
+
+
+})
+	  
+	  
+	  
+	  
+
 			
    
   };
+  
+
   
    const [errorMessage, setErrorMessage] = useState('')
  
@@ -152,7 +306,7 @@ const us_cities = ["City of Residence","Abbeville", "Abbotsford", "Aberdeen", "A
                             value={email}/>
       </FormGroup>
       <FormGroup className="booking__form d-inline-block ms-1 mb-4">
-        <input type="number" placeholder="Phone Number" onChange={(e) => setPhone(e.target.value)}
+        <input type="phone" maxlength="10" placeholder="Phone Number" onChange={(e) => setPhone(e.target.value)}
                             value={phone}/>
       </FormGroup>
 

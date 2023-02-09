@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 
 import HeroSlider from "../components/UI/HeroSlider";
 import Helmet from "../components/Helmet/Helmet";
@@ -9,6 +9,28 @@ import AboutSection from "../components/UI/AboutSection";
 
 
 const Home = () => {
+    
+    
+    var sBrowser, sUsrAg = navigator.userAgent;
+    
+    useEffect(() => {
+        
+        
+        
+        if(sUsrAg.indexOf("Chrome") > -1) {
+  document.body.style.zoom = "100%" 
+            
+        }
+        
+ 
+        else 
+         
+        { document.body.style.zoom = "100%"  }
+        
+         
+    });
+    
+   
   return (
     <Helmet title="Home">
       {/* ============= hero section =========== */}
@@ -19,13 +41,13 @@ const Home = () => {
 		   
           <Container>
             <Row className="form__row">
-              <Col lg="4" md="4">
+              <Col lg="6" md="10">
                 <div className="find__cars-left">
-                  <h2>Book a Time and Date </h2>
+                  <h2>Book a Date and Time </h2>
                 </div>
               </Col>
 
-              <Col lg="8" md="8" sm="12">
+              <Col lg="6" md="10" sm="12">
                 <FindCarForm />
               </Col>
             </Row>

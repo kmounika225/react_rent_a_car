@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import "../../styles/about-section.css";
-import aboutImg from "../../assets/all-images/cars-img/bmw-offer.png";
+
 
 const AboutSection = ({ aboutClass }) => {
   return (
@@ -10,18 +10,20 @@ const AboutSection = ({ aboutClass }) => {
       style={
         aboutClass === "aboutPage"
           ? { marginTop: "0px" }
-          : { marginTop: "280px" }
+          : { marginTop: "20px" }
       }
     >
       <Container>
         <Row>
           <Col lg="6" md="6">
             <div className="about__section-content">
-              <h4 className="section__subtitle">Booking Confirmation</h4>
-              <h2 className="section__title">Car booking progress</h2>
-              <p className="section__description">
-                Car is the being booked.Wait for confirmation page.
-              </p>
+            
+              <h2 className="section__title">Thanks for booking Car with us </h2>
+			  <br />
+			  
+              <h3 className="section__subtitle">
+                We have recieved your Payment also sent invoice and Booking Confirmation details to your email address..
+              </h3>
 
         
             </div>

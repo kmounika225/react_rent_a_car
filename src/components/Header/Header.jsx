@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { Container, Row, Col } from "reactstrap";
 import { Link, NavLink } from "react-router-dom";
 import "../../styles/header.css";
-
+import { useNavigate } from "react-router-dom";
 const navLinks = [
   {
     path: "/home",
@@ -15,17 +15,19 @@ const navLinks = [
   },
  
   {
-    path: "/home",
+    path: "/promos",
     display: "Promotions",
   },
    {
-    path: "/home",
+    path: "/contactPage",
     display: "Contact",
   }
 
 ];
+// const navigate = useNavigate();	
 
 const Header = () => {
+    const navigate = useNavigate();	
   const menuRef = useRef(null);
 
   let k = localStorage.getItem("islogged");
@@ -41,9 +43,44 @@ const Header = () => {
   const logout = (event) => {
 	  
 	  localStorage.setItem("islogged",false);
+      
+     localStorage.removeItem('email');
+      localStorage.removeItem('fname');
+      
+      localStorage.removeItem('fromdate');
+      localStorage.removeItem('fromplace');
+      
+       localStorage.removeItem('fromtime');
+      
+      localStorage.removeItem('lname');
+      localStorage.removeItem('phone');
+      
+       
+      localStorage.removeItem('selectedcarid');
+      localStorage.removeItem('selectedcarimg');
+      
+         
+      localStorage.removeItem('selectedcarname');
+      localStorage.removeItem('selectedcarprice');
+      
+      
+            localStorage.removeItem('todate');
+      localStorage.removeItem('toplace')
+      
+      
+            localStorage.removeItem('totime');
+      localStorage.removeItem('useramount')
+      
+      
+      
+      
+      
+      
 	  dg = false;
-	    window.location.reload(false);
-    event.preventDefault();
+	   // window.location.reload(false);
+      
+    //event.preventDefault();
+       navigate("/home");
 	
 	
 	
@@ -69,7 +106,7 @@ const Header = () => {
                 
 				  
 				 {	(dg) ?
-				(<Link to="/home" className=" d-flex align-items-center gap-1">
+				(<Link to="/userprofile" className=" d-flex align-items-center gap-1">
                   <i class="ri-user-circle-line"></i> MyAccount
                 </Link>
 				)
@@ -83,6 +120,17 @@ const Header = () => {
 				 
 				 }
 				 
+                   	 {	(dg) ?
+				(<Link to="/forgotPass" onClick={logout} className=" d-flex align-items-center gap-1">
+                  <i class="ri-user-circle-line" ></i> Change Password
+                </Link>
+				) :
+                  
+                  	(
+                      <h1></h1>
+				)
+                  }
+                  
 				 
 				 	 {	(dg) ?
 				(<Link to="/home" onClick={logout} className=" d-flex align-items-center gap-1">
